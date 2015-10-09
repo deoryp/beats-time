@@ -1,0 +1,10 @@
+#!/bin/bash
+
+t=$(TZ=UTC-1 date '+%T'  | awk -F':' '{print $1,$2,$3}')
+set -- $t
+
+beats=$(bc -l <<< "scale=0;($3 + $2 * 60 + $1 * 3600) / 86.4")
+
+# (UTC+1seconds + (UTC+1minutes * 60) + (UTC+1hours * 3600)) / 86.4
+
+echo "@$beats"
